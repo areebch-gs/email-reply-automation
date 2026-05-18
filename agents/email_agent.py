@@ -1,8 +1,12 @@
 import json
-from openai import OpenAI
+import os
 from oracle.client import OracleAPClient
 from oracle.queries import search_invoices, get_invoice_installments
-from rag.retriever import Retriever
+from rag.retriever import Retriever  # kept for future use / A-B testing
+from rag.context_loader import ContextLoader
+
+_DOCS_FOLDER = os.path.join(os.path.dirname(__file__), "..", "fwdfinaiusecasesandnextsteps")
+_context_loader = ContextLoader(_DOCS_FOLDER)
 
 CHAT_MODEL = "gpt-4o-mini"
 MAX_TOOL_ROUNDS = 6
@@ -16,7 +20,10 @@ Rules:
 - When you find an invoice, always follow up with get_installments to retrieve the exact due date and payment schedule.
 - Use search_knowledge_base for procedural questions (how to change payment terms, PO process, etc.) or to add context alongside Oracle data.
 - A single email may need multiple tool calls — use as many as needed to give a complete answer.
+- Always address every part of the vendor's question in your reply — if they asked multiple things, answer each one explicitly.
+- Never ask the vendor for more information or follow-up questions. Always attempt to answer using the available tools first. Only if the tools return no relevant data should you state that you could not find the information.
 - Be concise, professional, and empathetic in your reply.
+- If you cannot find an answer to a specific part of the question after searching, only then say you don't have that information.
 
 After your reply, on a new line output exactly this JSON (nothing else after it):
 {"confidence": <0.0-1.0>, "needs_review": <true|false>}
@@ -119,23 +126,22 @@ def _execute_tool(
         return json.dumps(results, default=str)
 
     if name == "search_knowledge_base":
-        chunks = retriever.search(args["query"], top_k=4, language=language)
-        if not chunks:
+        # Direct full-document load — bypasses vector retrieval.
+        # Switch back to retriever.search() below if semantic search is needed.
+        context_text, sources = _context_loader.get_context(language)
+        # sources = retriever.search(args["query"], top_k=4, language=language)
+        if not context_text:
             return "No relevant information found in the knowledge base."
-        for c in chunks:
-            entry = {"file": c["source"], "page": c["page"]}
+        for entry in sources:
             if entry not in kb_sources:
                 kb_sources.append(entry)
-        return "\n\n".join(
-            f"[{c['source']} — page {c['page']}]\n{c['text']}"
-            for c in chunks
-        )
+        return context_text
 
     return f"Unknown tool: {name}"
 
 
 def run(
-    client: OpenAI,
+    provider,
     oracle: OracleAPClient,
     retriever: Retriever,
     email_body: str,
@@ -149,6 +155,7 @@ def run(
         confidence   - 0.0–1.0 score from the agent
         needs_review - whether a human should review before sending
         tools_called - list of tool names + args used (for audit/logging)
+        kb_sources   - knowledge base documents used to generate the reply
     """
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
@@ -156,48 +163,25 @@ def run(
     ]
     tools_called = []
     kb_sources: list = []
-    final_message = None
+    final_response = None
 
     for _ in range(MAX_TOOL_ROUNDS):
-        response = client.chat.completions.create(
-            model=CHAT_MODEL,
-            messages=messages,
-            tools=TOOLS,
-            tool_choice="auto",
-        )
-        msg = response.choices[0].message
-        final_message = msg
+        response = provider.chat(messages, tools=TOOLS)
+        final_response = response
 
-        # Append assistant turn to history
-        assistant_entry: dict = {"role": "assistant", "content": msg.content}
-        if msg.tool_calls:
-            assistant_entry["tool_calls"] = [
-                {
-                    "id": tc.id,
-                    "type": "function",
-                    "function": {"name": tc.function.name, "arguments": tc.function.arguments},
-                }
-                for tc in msg.tool_calls
-            ]
-        messages.append(assistant_entry)
+        messages.append(response.assistant_message())
 
-        if not msg.tool_calls:
+        if not response.tool_calls:
             break
 
-        # Execute each tool and feed results back
-        for tc in msg.tool_calls:
-            name = tc.function.name
-            args = json.loads(tc.function.arguments)
+        for tc in response.tool_calls:
+            tool_id, name, args = response.parse_tool_call(tc)
             tools_called.append({"tool": name, "args": args})
 
             result = _execute_tool(name, args, oracle, retriever, language, kb_sources)
-            messages.append({
-                "role": "tool",
-                "tool_call_id": tc.id,
-                "content": result,
-            })
+            messages.append(response.tool_result_message(tool_id, result))
 
-    raw = final_message.content or ""
+    raw = final_response.content or ""
 
     # Parse the metadata JSON block the agent appends at the end
     reply_text = raw

@@ -17,6 +17,11 @@ tests = [
         "deaccountspayable@sharkninja.com",
         "PO change — DE mailbox (German docs only)",
     ),
+    (
+        "Hi, invoice 14000 still hasn't been paid. Can you tell me the status and also explain what your standard payment terms are and how I get paid?",
+        "ukaccountspayable@sharkninja.com",
+        "Invoice status + payment process — Oracle AND KB (English docs)",
+    ),
 ]
 
 for i, (email, mailbox, description) in enumerate(tests, 1):
@@ -34,3 +39,4 @@ for i, (email, mailbox, description) in enumerate(tests, 1):
     print(f"Confidence   : {result['confidence']}")
     print(f"Needs review : {result['needs_review']}")
     print(f"Tools called : {[t['tool'] for t in result['tools_called']]}")
+    print(f"KB sources   : {result.get('kb_sources', [])}")

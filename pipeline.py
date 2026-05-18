@@ -7,14 +7,25 @@ from rag.store import VectorStore
 from rag.retriever import Retriever
 from rag.generator import Generator
 from agents import email_agent
+from llm.factory import get_provider
 
 load_dotenv()
 
-_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-_embedder = Embedder(_client)
+# On Streamlit Cloud, secrets are injected via st.secrets rather than .env
+try:
+    import streamlit as st
+    for key in ("OPENAI_API_KEY", "ORACLE_BASE_URL", "ORACLE_USERNAME", "ORACLE_PASSWORD", "ANTHROPIC_API_KEY"):
+        if key in st.secrets and not os.environ.get(key):
+            os.environ[key] = st.secrets[key]
+except Exception:
+    pass
+
+_provider = get_provider()
+_openai_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])  # kept for embeddings
+_embedder = Embedder(_openai_client)
 _store = VectorStore()
 _retriever = Retriever(_embedder, _store)
-_generator = Generator(_client)
+_generator = Generator(_openai_client)
 _oracle = OracleAPClient()
 
 # Maps the recipient mailbox prefix to the language used for RAG filtering
@@ -59,6 +70,6 @@ def process_email(email_body: str, mailbox: str = "ukaccountspayable@sharkninja.
         language     - language used for RAG filtering
     """
     language = _resolve_language(mailbox)
-    result = email_agent.run(_client, _oracle, _retriever, email_body, language)
+    result = email_agent.run(_provider, _oracle, _retriever, email_body, language)
     result["language"] = language
     return result
