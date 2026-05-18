@@ -1,0 +1,198 @@
+[
+  {
+    "id": "q001",
+    "category": "invoice_submission",
+    "question": "Where do I send my invoice if I supply to SharkNinja Germany?",
+    "ground_truth": "All invoices, statements and queries for SharkNinja Germany GmbH must be sent to deaccountspayable@sharkninja.com. Invoices must be in PDF format, one PDF per invoice, and one email per invoice.",
+    "sources": ["How to Get Paid Guide (DE).pdf"]
+  },
+  {
+    "id": "q002",
+    "category": "invoice_submission",
+    "question": "What is the accounts payable email for SharkNinja France?",
+    "ground_truth": "The accounts payable email for SharkNinja France SAS is fraccountspayable@sharkninja.com. All invoices, statements and queries must be sent to this address.",
+    "sources": ["How to Get Paid Guide (FR).pdf", "Useful Finance Contacts (UK).pdf"]
+  },
+  {
+    "id": "q003",
+    "category": "invoice_submission",
+    "question": "Can I send multiple invoices in one email or one PDF?",
+    "ground_truth": "No. Only one PDF file per invoice per email is accepted. Multiple invoices on one PDF cannot be accepted, and one email with multiple PDF invoices cannot be accepted either. Each invoice must be sent as a separate PDF in a separate email.",
+    "sources": ["How to Get Paid Guide (UK).pdf", "How to Get Paid Guide (DE).pdf", "How to Get Paid Guide (FR).pdf", "How to Get Paid Guide (LDN).pdf"]
+  },
+  {
+    "id": "q004",
+    "category": "invoice_requirements",
+    "question": "What information must be included on my invoice?",
+    "ground_truth": "Your invoice must include: (1) a valid purchase order (PO) number — invoices without a valid PO number will be returned, (2) all information required under current HMRC legislation, and (3) valid bank details. The invoice must be sent as a single PDF per email.",
+    "sources": ["How to Get Paid Guide (UK).pdf"]
+  },
+  {
+    "id": "q005",
+    "category": "invoice_requirements",
+    "question": "My invoice does not have a PO number. Will it be paid?",
+    "ground_truth": "No. SharkNinja operates a 'No PO, No Pay' policy. Invoices that do not quote a valid purchase order number will be returned to the supplier for resubmission. You should ask the internal PO owner to provide you with a valid PO number before resubmitting.",
+    "sources": ["How to Get Paid Guide (UK).pdf", "Responsibility of a PO Owner (UK).pdf"]
+  },
+  {
+    "id": "q006",
+    "category": "payment_timelines",
+    "question": "How long does it take to process my invoice for payment?",
+    "ground_truth": "SharkNinja requires 5 working days from receipt of a valid invoice to process it for inclusion in the next available payment run. Note: an invoice cannot be paid until the purchase order for the goods or services has been receipted.",
+    "sources": ["How to Get Paid Guide (UK).pdf", "How to Get Paid Guide (DE).pdf", "How to Get Paid Guide (FR).pdf"]
+  },
+  {
+    "id": "q007",
+    "category": "payment_timelines",
+    "question": "When are payment runs? When will funds clear into my account?",
+    "ground_truth": "Payment runs take place every week on a Wednesday. Funds will clear into the supplier bank account by end of day on Friday of that week. All payments are made by electronic bank transfer.",
+    "sources": ["How to Get Paid Guide (UK).pdf", "How to Get Paid Guide (DE).pdf", "How to Get Paid Guide (FR).pdf", "How to Get Paid Guide (LDN).pdf"]
+  },
+  {
+    "id": "q008",
+    "category": "payment_terms",
+    "question": "What are the standard payment terms?",
+    "ground_truth": "Standard payment terms are 60 days from the date of the invoice. Non-standard terms must be signed off by a Finance Director or Financial Controller prior to onboarding.",
+    "sources": ["New Supplier Set Up.pdf", "How to Get Paid Guide (UK).pdf"]
+  },
+  {
+    "id": "q009",
+    "category": "payment_terms",
+    "question": "My invoice is disputed. When will I be notified and when will it be paid?",
+    "ground_truth": "Disputed invoices are referred to the buyer who placed the order within 3 working days. The supplier will also be notified within 3 working days that the invoice is under dispute. Disputed invoices will not be paid until the dispute is resolved.",
+    "sources": ["How to Get Paid Guide (UK).pdf", "How to Get Paid Guide (DE).pdf", "How to Get Paid Guide (FR).pdf"]
+  },
+  {
+    "id": "q010",
+    "category": "supplier_setup",
+    "question": "How do I register as a new supplier with SharkNinja?",
+    "ground_truth": "To register as a new supplier: (1) Request a new supplier form from the relevant Accounts Payable team for your business unit. (2) Complete and sign the form — unsigned forms will be rejected. (3) The internal PO owner creates a Jira ticket on the HUB under Service Desk > Vendor Requests > Vendor Onboarding, uploading the signed form and any NDA or documentation. (4) Once the Vendor Onboarding Team approves, the Accounts Payable team is emailed to open a new account. (5) The account is created by the Master Data Team, and you will receive the 'How To Get Paid Guide'.",
+    "sources": ["New Supplier Set Up.pdf"]
+  },
+  {
+    "id": "q011",
+    "category": "supplier_setup",
+    "question": "Can non-standard payment terms be agreed during supplier onboarding?",
+    "ground_truth": "Yes, but non-standard payment terms must be approved by a Finance Director or Financial Controller prior to onboarding. The approval email must be included when emailing the Accounts Payable team to open the new supplier account.",
+    "sources": ["New Supplier Set Up.pdf"]
+  },
+  {
+    "id": "q012",
+    "category": "po_owner",
+    "question": "What are my responsibilities as a PO owner?",
+    "ground_truth": "As a PO owner you are responsible for: (1) Raising the PO before spend is committed and fully approved. (2) Passing the PO number to the supplier and ensuring it appears on the invoice ('No PO, No Pay' policy). (3) Ensuring the supplier sends their invoice to the correct AP email — attaching an invoice to a PO does NOT submit it to AP. (4) Receipting the PO once goods/services are delivered — AP cannot pay without this. (5) Increasing the PO value if the invoice exceeds it (do not raise a separate PO). (6) Assigning a delegate if you are out of office. (7) Responding within 3 working days when Finance contacts you about open POs.",
+    "sources": ["Responsibility of a PO Owner (UK).pdf"]
+  },
+  {
+    "id": "q013",
+    "category": "po_owner",
+    "question": "I attached an invoice to a PO in Coupa. Does Accounts Payable receive it automatically?",
+    "ground_truth": "No. Attaching an invoice to a PO in Coupa does NOT submit the invoice to Accounts Payable. The invoice must be emailed separately to the correct Accounts Payable email address for the relevant SharkNinja entity.",
+    "sources": ["Responsibility of a PO Owner (UK).pdf"]
+  },
+  {
+    "id": "q014",
+    "category": "po_owner",
+    "question": "The invoice value is higher than my PO. What should I do?",
+    "ground_truth": "If the invoice value is higher than the original approved PO, you should increase the PO value and submit the invoice once the increase has been approved. Do not raise a separate PO.",
+    "sources": ["Responsibility of a PO Owner (UK).pdf"]
+  },
+  {
+    "id": "q015",
+    "category": "troubleshooting",
+    "question": "Why has my supplier not been paid? What should I check?",
+    "ground_truth": "Work through this checklist: (1) Has the supplier sent the invoice to AP? If not, send it. (2) Did the invoice quote a valid PO? If not, ask supplier to reissue. (3) Did the PO have enough budget? If not, submit a change request. (4) Has the PO been receipted? If you see the amount as 'pending invoices' on the PO, receipt it. (5) Is the invoice visible as 'approved invoices' in Coupa? If yes, it has been processed into Oracle and will be paid when due. (6) Is payment actually due? Check the payment terms and due date in Coupa. If still unsure, contact AP. Note: changes made to POs or invoices after Tuesday won't be included until the following week's payment run.",
+    "sources": ["Why has my supplier not been paid - troubleshooting guide.pdf"]
+  },
+  {
+    "id": "q016",
+    "category": "troubleshooting",
+    "question": "My supplier's invoice shows as approved in Coupa but still has not been paid. Why?",
+    "ground_truth": "If the invoice shows as 'approved invoices' in Coupa, it has been successfully processed into Oracle and will be picked up for payment when it becomes due. Check the payment terms and due date shown in Coupa — payment may simply not be due yet. If the due date has passed, contact AP to help troubleshoot or to get an advised payment date.",
+    "sources": ["Why has my supplier not been paid - troubleshooting guide.pdf"]
+  },
+  {
+    "id": "q017",
+    "category": "sundry_creditors",
+    "question": "Can I pay a one-time low-value supplier without onboarding them?",
+    "ground_truth": "Yes, using the Sundry Creditors process, provided the supplier is low value, will only be paid once, there is no overarching contract or statement of work, and there are no legal/compliance issues. Sundry creditors has a 30-day payment term. Bank details must be included on the invoice as there are no bank details stored in the system. Note: if the value is over £10k/€10k, an additional compliance check is required.",
+    "sources": ["Sundry Creditors - usage policy .pdf"]
+  },
+  {
+    "id": "q018",
+    "category": "sundry_creditors",
+    "question": "What are the payment terms for a sundry supplier?",
+    "ground_truth": "Sundry creditors has a 30-day payment term. Your supplier should expect payment on or just before 30 days after the date of the invoice. Payments sooner than this require a valid business case approved by a Financial Controller or Finance Director.",
+    "sources": ["Sundry Creditors - usage policy .pdf"]
+  },
+  {
+    "id": "q019",
+    "category": "contacts",
+    "question": "Who do I contact for Coupa help or queries?",
+    "ground_truth": "For Coupa help, email financecoupaqueries@sharkninja.com. Important: new user accounts must be set up by raising a Service Desk ticket, not via this email address.",
+    "sources": ["Useful Finance Contacts (UK).pdf"]
+  },
+  {
+    "id": "q020",
+    "category": "contacts",
+    "question": "What is the accounts receivable contact for SharkNinja Germany?",
+    "ground_truth": "For accounts receivable queries (customer debit note statements, COOP, claims) for SharkNinja Germany GmbH, contact deaccountsreceivable@sharkninja.com.",
+    "sources": ["Useful Finance Contacts (UK).pdf"]
+  },
+  {
+    "id": "q021",
+    "category": "supplier_setup",
+    "language": "es",
+    "question": "¿Qué ocurre si el formulario de nuevo proveedor no está firmado?",
+    "ground_truth": "Los formularios que no vengan firmados no se aceptarán y serán rechazados. El proveedor debe cumplimentar y firmar el formulario antes de enviarlo al Departamento de Pagos.",
+    "sources": ["New Supplier Set Up (ES Translated).pdf"]
+  },
+  {
+    "id": "q022",
+    "category": "supplier_setup",
+    "language": "es",
+    "question": "¿Cuál es el plazo de pago estándar para los nuevos proveedores de SharkNinja?",
+    "ground_truth": "El plazo de pago estándar es de 60 días a partir de la fecha de la factura. El uso de plazos de pago diferentes al estándar solo se aceptará con el visto bueno de un director financiero o un controlador financiero, antes de la incorporación.",
+    "sources": ["New Supplier Set Up (ES Translated).pdf"]
+  },
+  {
+    "id": "q023",
+    "category": "contacts",
+    "language": "es",
+    "question": "¿A quién debo contactar para obtener ayuda con Coupa?",
+    "ground_truth": "Para obtener ayuda con Coupa, debe escribir a financecoupaqueries@sharkninja.com. Nota importante: para configurar una cuenta de usuario nueva, hay que generar una incidencia de Servicio de Atención al Cliente (Service Desk), y no se debe utilizar esta dirección de correo electrónico para tal fin.",
+    "sources": ["Useful Finance Contacts (ES Translated).pdf"]
+  },
+  {
+    "id": "q024",
+    "category": "po_owner",
+    "language": "es",
+    "question": "¿Qué debo hacer si estoy fuera de la oficina y no puedo gestionar mis órdenes de compra?",
+    "ground_truth": "Si no está en la oficina y no puede gestionar sus órdenes de compra, debe delegar en otra persona la aprobación y los acuses de recibo para evitar demoras en los pagos.",
+    "sources": ["Responsibility of a PO Owner (ES Translated).pdf"]
+  },
+  {
+    "id": "q025",
+    "category": "supplier_setup",
+    "language": "it",
+    "question": "Come posso richiedere il modulo per un nuovo fornitore in SharkNinja?",
+    "ground_truth": "Il modulo per i nuovi fornitori può essere richiesto all'ufficio Contabilità fornitori. Si tenga presente che ogni unità aziendale dispone di un proprio modulo. Gli indirizzi email sono: SharkNinja Europe Ltd: ukaccountspayable@sharkninja.com, SharkNinja UK EP: uklonaccountspayable@sharkninja.com, SharkNinja Germany GmbH: deaccountspayable@sharkninja.com, SharkNinja France SAS: fraccountspayable@sharkninja.com.",
+    "sources": ["New Supplier Set Up (IT Translated).pdf"]
+  },
+  {
+    "id": "q026",
+    "category": "contacts",
+    "language": "it",
+    "question": "Qual è il contatto per la contabilità fornitori di SharkNinja France?",
+    "ground_truth": "Per la contabilità fornitori di SharkNinja France SAS (fatture fornitori, note di credito, rendiconti, domande relative ai pagamenti), contattare fraccountspayable@sharkninja.com.",
+    "sources": ["Useful Finance Contacts (IT Translated).pdf"]
+  },
+  {
+    "id": "q027",
+    "category": "po_owner",
+    "language": "it",
+    "question": "Cosa devo fare se il valore della fattura supera quello dell'ordine di acquisto?",
+    "ground_truth": "Se il valore dei beni o servizi è superiore a quello originariamente approvato sull'ordine di acquisto, è necessario incrementare il valore dell'ordine e inoltrare la fattura una volta che l'incremento sarà stato approvato. Non emettere un ulteriore ordine di acquisto separato.",
+    "sources": ["Responsibility of a PO Owner (IT Translated).pdf"]
+  }
+]
