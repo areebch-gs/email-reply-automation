@@ -34,6 +34,14 @@ MAILBOXES = [
 
 st.set_page_config(page_title="AP Email Assistant", page_icon="📧", layout="wide")
 
+st.markdown("""<style>
+[data-testid="stVerticalBlockBorderWrapper"] [data-testid="stMarkdownContainer"] {
+    background-color: rgb(240, 242, 246) !important;
+    border-radius: 6px;
+    padding: 16px 20px;
+}
+</style>""", unsafe_allow_html=True)
+
 st.title("📧 Accounts Payable Email Assistant")
 st.caption("AI-powered vendor email reply drafting — powered by Oracle AP + internal finance guides")
 
@@ -80,8 +88,9 @@ if submit and email_body.strip():
         result = process_email(email_body, mailbox=mailbox)
 
     # Reply
-    st.subheader("Drafted Reply")
-    st.markdown(result["reply"])
+    st.subheader("Drafted Email")
+    with st.container(border=True):
+        st.markdown(result["reply"])
 
     st.divider()
 
