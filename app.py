@@ -86,12 +86,8 @@ if submit and email_body.strip():
     st.divider()
 
     # Metadata row
-    m1, m2, m3, m4 = st.columns(4)
+    m2, m3, m4 = st.columns(3)
 
-    confidence_pct = int(result["confidence"] * 100)
-    confidence_color = "green" if confidence_pct >= 75 else "orange"
-
-    m1.metric("Confidence", f"{confidence_pct}%")
     m2.metric("Needs Human Review", "Yes" if result["needs_review"] else "No")
     m3.metric("Language (RAG filter)", result["language"].capitalize())
     m4.metric("Tools Called", len(result["tools_called"]))
