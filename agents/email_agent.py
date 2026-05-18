@@ -2,7 +2,7 @@ import json
 import os
 from oracle.client import OracleAPClient
 from oracle.queries import search_invoices, get_invoice_installments
-from rag.retriever import Retriever  # kept for future use / A-B testing
+# from rag.retriever import Retriever  # kept for future use / A-B testing
 from rag.context_loader import ContextLoader
 
 _DOCS_FOLDER = os.path.join(os.path.dirname(__file__), "..", "fwdfinaiusecasesandnextsteps")
@@ -109,7 +109,7 @@ def _execute_tool(
     name: str,
     args: dict,
     oracle: OracleAPClient,
-    retriever: Retriever,
+    # retriever: Retriever,  # kept for future use / A-B testing
     language: str,
     kb_sources: list,
 ) -> str:
@@ -143,7 +143,7 @@ def _execute_tool(
 def run(
     provider,
     oracle: OracleAPClient,
-    retriever: Retriever,
+    #retriever: Retriever,
     email_body: str,
     language: str = "english",
 ) -> dict:
@@ -178,7 +178,7 @@ def run(
             tool_id, name, args = response.parse_tool_call(tc)
             tools_called.append({"tool": name, "args": args})
 
-            result = _execute_tool(name, args, oracle, retriever, language, kb_sources)
+            result = _execute_tool(name, args, oracle, language, kb_sources)
             messages.append(response.tool_result_message(tool_id, result))
 
     raw = final_response.content or ""

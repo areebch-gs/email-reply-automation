@@ -1,10 +1,15 @@
-import chromadb
+try:
+    import chromadb
+except ImportError:
+    chromadb = None
 
 COLLECTION_NAME = "finance_docs"
 
 
 class VectorStore:
     def __init__(self, persist_dir: str = "./chroma_db"):
+        if chromadb is None:
+            raise ImportError("chromadb is not installed. Run: pip install chromadb")
         self.client = chromadb.PersistentClient(path=persist_dir)
         self.collection = self.client.get_or_create_collection(
             name=COLLECTION_NAME,

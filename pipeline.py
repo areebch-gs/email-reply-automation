@@ -1,11 +1,10 @@
 import os
 from dotenv import load_dotenv
-from openai import OpenAI
 from oracle.client import OracleAPClient
-from rag.embedder import Embedder
-from rag.store import VectorStore
-from rag.retriever import Retriever
-from rag.generator import Generator
+# from rag.embedder import Embedder
+# from rag.store import VectorStore
+# from rag.retriever import Retriever
+# from rag.generator import Generator
 from agents import email_agent
 from llm.factory import get_provider
 
@@ -21,11 +20,11 @@ except Exception:
     pass
 
 _provider = get_provider()
-_openai_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])  # kept for embeddings
-_embedder = Embedder(_openai_client)
-_store = VectorStore()
-_retriever = Retriever(_embedder, _store)
-_generator = Generator(_openai_client)
+# _openai_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])  # kept for embeddings
+# _embedder = Embedder(_openai_client)
+# _store = VectorStore()
+# _retriever = Retriever(_embedder, _store)
+# _generator = Generator(_openai_client)
 _oracle = OracleAPClient()
 
 # Maps the recipient mailbox prefix to the language used for RAG filtering
@@ -70,6 +69,6 @@ def process_email(email_body: str, mailbox: str = "ukaccountspayable@sharkninja.
         language     - language used for RAG filtering
     """
     language = _resolve_language(mailbox)
-    result = email_agent.run(_provider, _oracle, _retriever, email_body, language)
+    result = email_agent.run(_provider, _oracle, email_body, language)
     result["language"] = language
     return result
