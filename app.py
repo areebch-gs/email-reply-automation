@@ -104,14 +104,13 @@ if submit and email_body.strip():
     st.divider()
 
     # KB Sources
-    kb_sources = result.get("kb_sources", [])
-    if kb_sources:
-        st.subheader("📄 Knowledge Base Sources")
-        st.caption("Documents consulted to generate this reply")
-        for src in kb_sources:
-            st.markdown(f"- **{src['file']}** — page {src['page']}")
+    llm_sources = result.get("llm_sources", [])
+    st.subheader("📄 Knowledge Base Sources")
+    if llm_sources:
+        st.caption("Documents the model referenced to write this reply")
+        for fname in llm_sources:
+            st.markdown(f"- **{fname}**")
     else:
-        st.subheader("📄 Knowledge Base Sources")
         st.caption("No KB documents used — answer sourced entirely from Oracle AP data")
 
     # Tools detail (expandable)
