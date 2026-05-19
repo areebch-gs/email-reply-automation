@@ -47,6 +47,11 @@ st.caption("AI-powered vendor email reply drafting — powered by Oracle AP + in
 
 st.divider()
 
+PROVIDER_MODELS = {
+    "openai": ["gpt-4o-mini", "gpt-5-mini-2025-08-07", "gpt-5.4-mini"],
+    "claude": ["claude-sonnet-4-6"],
+}
+
 # ── Inputs ────────────────────────────────────────────────────────────────────
 col1, col2 = st.columns([2, 1])
 
@@ -64,6 +69,14 @@ with col2:
         mailbox_index = 0
 
     mailbox = st.selectbox("Recipient mailbox", options=MAILBOXES, index=mailbox_index)
+
+col3, col4 = st.columns(2)
+
+with col3:
+    provider_name = st.selectbox("LLM Provider", options=list(PROVIDER_MODELS.keys()))
+
+with col4:
+    model = st.selectbox("Model", options=PROVIDER_MODELS[provider_name])
 
 default_email = (
     SAMPLE_QUESTIONS[sample][0]
@@ -85,7 +98,7 @@ st.divider()
 # ── Processing + Results ──────────────────────────────────────────────────────
 if submit and email_body.strip():
     with st.spinner("Processing..."):
-        result = process_email(email_body, mailbox=mailbox)
+        result = process_email(email_body, mailbox=mailbox, provider_name=provider_name, model=model)
 
     # Reply
     st.subheader("Drafted Email")

@@ -52,7 +52,12 @@ def answer(query: str, top_k: int = 5) -> dict:
     return {"answer": response, "sources": sources}
 
 
-def process_email(email_body: str, mailbox: str = "ukaccountspayable@sharkninja.com") -> dict:
+def process_email(
+    email_body: str,
+    mailbox: str = "ukaccountspayable@sharkninja.com",
+    provider_name: str | None = None,
+    model: str | None = None,
+) -> dict:
     """
     Full agent pipeline for vendor emails.
 
@@ -69,6 +74,7 @@ def process_email(email_body: str, mailbox: str = "ukaccountspayable@sharkninja.
         language     - language used for RAG filtering
     """
     language = _resolve_language(mailbox)
-    result = email_agent.run(_provider, _oracle, email_body, language)
+    provider = get_provider(provider_name, model) if (provider_name or model) else _provider
+    result = email_agent.run(provider, _oracle, email_body, language)
     result["language"] = language
     return result
